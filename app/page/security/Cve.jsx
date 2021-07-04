@@ -1,11 +1,11 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
-import {ApiClient} from "../util/ApiClient";
+import {ApiClient} from "../../util/ApiClient";
 import Box from "@material-ui/core/Box";
-import LTable from "../component/table/LTable";
+import LTable from "../../component/table/LTable";
 import DashboardIcon from "@material-ui/icons/Dashboard";
-import Paging from "../component/table/Paging";
-import {SaveCveListOrder} from "../reducer/order";
+import Paging from "../../component/table/Paging";
+import {SaveCveListOrder} from "../../reducer/order";
 
 const Severity = {
     4: "High",

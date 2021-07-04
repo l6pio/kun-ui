@@ -15,6 +15,7 @@ const useToolbarStyles = makeStyles(theme => ({
     },
     title: {
         flex: "1 1 100%",
+        fontWeight: "bold"
     }
 }));
 
