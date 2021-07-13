@@ -1,47 +1,30 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
-import {ApiClient} from "../../util/ApiClient";
+import {ApiClient} from "../util/ApiClient";
 import Box from "@material-ui/core/Box";
-import LTable from "../../component/table/LTable";
+import LTable from "../component/table/LTable";
 import DashboardIcon from "@material-ui/icons/Dashboard";
-import Paging from "../../component/table/Paging";
-import {SaveCveListOrder} from "../../reducer/order";
+import Paging from "../component/table/Paging";
+import {SaveCveListOrder} from "../reducer/table";
+import {FixState, Severity} from "../Const";
 
-const Severity = {
-    4: "High",
-    3: "Medium",
-    2: "Low",
-    1: "Negligible",
-    0: "Unknown"
-};
-
-const FixState = {
-    3: "Fixed",
-    2: "Not Fixed",
-    1: "Won't Fix",
-    0: "Unknown"
-};
-
-const Cve = ({dispatch, cveListOrder}) => {
+const CveList = ({dispatch, cveListOrder}) => {
     const apiClient = ApiClient();
     const paging = Paging(cveListOrder.orderBy, cveListOrder.order);
 
-    const listCves = () => {
+    useEffect(() => {
         apiClient.get(`/cve?page=${paging.page}&order=${paging.order}${paging.orderBy}`).then(res => {
-            const data = res.data.result;
-            paging.setData(data.slice.map(v => ({
+            paging.setData(res.data.slice.map(v => ({
                 id: v.id,
                 severity: v.severity,
                 fixState: v.fixState,
                 imageCount: v.imageCount
             })));
-            paging.setPage(data.page);
-            paging.setPageCount(data.pageCount);
-            paging.setRowsPerPage(data.rowsPerPage);
+            paging.setPage(res.data.page);
+            paging.setPageCount(res.data.pageCount);
+            paging.setRowsPerPage(res.data.rowsPerPage);
         });
-    };
-
-    useEffect(() => listCves(), [paging.trigger]);
+    }, [paging.trigger]);
 
     const columns = [
         {
@@ -68,7 +51,7 @@ const Cve = ({dispatch, cveListOrder}) => {
     ];
 
     return (
-        <Box m="10px">
+        <Box m="20px">
             <LTable
                 id="cve-table"
                 title={"CVE List"}
@@ -102,4 +85,4 @@ const stateToProps = (state) => ({
     cveListOrder: state.cveListOrder,
 });
 
-export default connect(stateToProps)(Cve);
+export default connect(stateToProps)(CveList);

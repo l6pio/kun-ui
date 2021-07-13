@@ -10,8 +10,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 import {SaveMenuId} from "../reducer/menu";
 import Typography from "@material-ui/core/Typography";
 import BugReportIcon from "@material-ui/icons/BugReport";
+import LayersIcon from "@material-ui/icons/Layers";
 import {useHistory} from "react-router-dom";
-import {ListSubheader} from "@material-ui/core";
 
 const MenuWidth = 200;
 
@@ -37,8 +37,13 @@ const useMenuStyles = makeStyles(theme => ({
 
 const menuItems = {
     10: {
+        label: <Typography variant="body1">{"Image"}</Typography>,
+        path: "/image",
+        icon: <LayersIcon style={{color: "white"}}/>
+    },
+    20: {
         label: <Typography variant="body1">{"CVE"}</Typography>,
-        path: "/",
+        path: "/cve",
         icon: <BugReportIcon style={{color: "white"}}/>
     },
 };
@@ -83,14 +88,9 @@ const Menu = ({dispatch, menuId}) => {
                 </Typography>
             </div>
             <Divider/>
-            <List
-                subheader={
-                    <ListSubheader id="subheader" className={classes.menuSubHeader}>
-                        SECURITY
-                    </ListSubheader>
-                }
-            >
+            <List>
                 <MenuItem history={history} dispatch={dispatch} id={10} menuId={menuId}/>
+                <MenuItem history={history} dispatch={dispatch} id={20} menuId={menuId}/>
             </List>
         </Drawer>
     );

@@ -2,16 +2,17 @@ import React, {Fragment} from "react";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 import clsx from "clsx";
-import {createMuiTheme, makeStyles, ThemeProvider} from "@material-ui/core/styles";
+import {makeStyles, ThemeProvider} from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Box from "@material-ui/core/Box";
 import Menu, {MenuWidth} from "./Menu";
-import SysFont from "../fonts/TT Norms Pro Regular.woff";
-import SysFontBold from "../fonts/TT Norms Pro Bold.woff";
-import SysFontItalic from "../fonts/TT Norms Pro Italic.woff";
-import SysFontBoldItalic from "../fonts/TT Norms Pro Bold Italic.woff";
+import SysFont from "../font/TT Norms Pro Regular.woff";
+import SysFontBold from "../font/TT Norms Pro Bold.woff";
+import SysFontItalic from "../font/TT Norms Pro Italic.woff";
+import SysFontBoldItalic from "../font/TT Norms Pro Bold Italic.woff";
+import {createTheme} from "@material-ui/core";
 
-const theme = createMuiTheme({
+const theme = createTheme({
     breakpoints: {
         values: {
             xs: 0,

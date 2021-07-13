@@ -1,9 +1,11 @@
 import {combineReducers} from "redux";
-import {menuId} from "./menu";
-import {cveListOrder} from "./order";
+import {artifactListOrder, cveListOrder, imageListOrder} from "./table";
+import {imageTabIdx, menuId} from "./menu";
+import {imageId} from "./select";
 
 const reducers = combineReducers({
-    menuId, cveListOrder
+    imageListOrder, artifactListOrder, cveListOrder,
+    menuId, imageTabIdx, imageId
 });
 
 export default reducers;
