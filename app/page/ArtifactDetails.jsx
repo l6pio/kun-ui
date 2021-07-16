@@ -1,37 +1,34 @@
-import React, {useEffect} from "react";
 import {connect} from "react-redux";
-import {Grid, TextField} from "@material-ui/core";
+import React, {useEffect} from "react";
 import Box from "@material-ui/core/Box";
 import {LTabs} from "../component/LTabs";
 import {ApiClient} from "../util/ApiClient";
-import {niceBytes} from "../Const";
+import {Grid, TextField} from "@material-ui/core";
+import {ImageTable} from "../component/ImageTable";
 import {CveTable} from "../component/CveTable";
-import {ArtifactTable} from "../component/ArtifactTable";
 
 const Profile = connect((state) => ({
-    image: state.image,
-}))(({image}) => {
+    artifact: state.artifact,
+}))(({artifact}) => {
     const apiClient = ApiClient();
     const [data, setData] = React.useState({
         name: "",
-        id: "",
-        size: 0,
-        usage: 0
+        version: ""
     });
 
     useEffect(() => {
-        apiClient.get(`/image/${image.id}`).then(res => {
+        apiClient.get(`/artifact/${artifact.id}`).then(res => {
             setData(res.data);
         });
-    }, [image]);
+    }, [artifact]);
 
     return (
         <Box style={{padding: "25px 0 20px 0"}}>
             <Grid container spacing={3}>
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={7} md={8}>
                     <TextField
-                        id="image-name"
-                        label="Image Name"
+                        id="artifact-name"
+                        label="Artifact Name"
                         value={data.name}
                         variant="outlined"
                         InputProps={{
@@ -40,35 +37,11 @@ const Profile = connect((state) => ({
                         fullWidth
                     />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={5} md={4}>
                     <TextField
-                        id="image-id"
-                        label="Image ID"
-                        value={data.id}
-                        variant="outlined"
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                        fullWidth
-                    />
-                </Grid>
-                <Grid item xs={12} sm={6} md={3}>
-                    <TextField
-                        id="image-size"
-                        label="Image Size"
-                        value={niceBytes(data.size)}
-                        variant="outlined"
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                        fullWidth
-                    />
-                </Grid>
-                <Grid item xs={12} sm={6} md={3}>
-                    <TextField
-                        id="pods"
-                        label="Pods"
-                        value={data.usage}
+                        id="artifact-version"
+                        label="Artifact Version"
+                        value={data.version}
                         variant="outlined"
                         InputProps={{
                             readOnly: true,
@@ -81,9 +54,9 @@ const Profile = connect((state) => ({
     );
 });
 
-export const ImageDetails = connect((state) => ({
-    image: state.image,
-}))(({image}) => {
+export const ArtifactDetails = connect((state) => ({
+    artifact: state.artifact,
+}))(({artifact}) => {
     const [tabIdx, setTabIdx] = React.useState(0);
 
     return (
@@ -98,13 +71,13 @@ export const ImageDetails = connect((state) => ({
                         style: {padding: "0 24px 4px 24px"},
                     },
                     {
-                        label: "Artifact",
-                        content: <ArtifactTable image={image} cve={null} flat/>,
+                        label: "Image",
+                        content: <ImageTable artifact={artifact} cve={null} flat/>,
                         style: {padding: "0 24px 4px 24px"},
                     },
                     {
                         label: "CVE",
-                        content: <CveTable image={image} artifact={null} flat/>,
+                        content: <CveTable artifact={artifact} image={null} flat/>,
                         style: {padding: "0 24px 4px 24px"},
                     }
                 ]}/>

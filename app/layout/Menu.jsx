@@ -11,9 +11,10 @@ import {SaveMenuId} from "../reducer/menu";
 import Typography from "@material-ui/core/Typography";
 import BugReportIcon from "@material-ui/icons/BugReport";
 import LayersIcon from "@material-ui/icons/Layers";
+import CategoryIcon from "@material-ui/icons/Category";
 import {useHistory} from "react-router-dom";
 
-const MenuWidth = 200;
+export const MenuWidth = 200;
 
 const useMenuStyles = makeStyles(theme => ({
     menuPaper: {
@@ -42,6 +43,11 @@ const menuItems = {
         icon: <LayersIcon style={{color: "white"}}/>
     },
     20: {
+        label: <Typography variant="body1">{"Artifact"}</Typography>,
+        path: "/artifact",
+        icon: <CategoryIcon style={{color: "white"}}/>
+    },
+    30: {
         label: <Typography variant="body1">{"CVE"}</Typography>,
         path: "/cve",
         icon: <BugReportIcon style={{color: "white"}}/>
@@ -69,7 +75,9 @@ const MenuItem = ({history, dispatch, id, menuId}) => {
     );
 };
 
-const Menu = ({dispatch, menuId}) => {
+export const Menu = connect((state) => ({
+    menuId: state.menuId,
+}))(({dispatch, menuId}) => {
     const history = useHistory();
     const classes = useMenuStyles();
 
@@ -91,14 +99,8 @@ const Menu = ({dispatch, menuId}) => {
             <List>
                 <MenuItem history={history} dispatch={dispatch} id={10} menuId={menuId}/>
                 <MenuItem history={history} dispatch={dispatch} id={20} menuId={menuId}/>
+                <MenuItem history={history} dispatch={dispatch} id={30} menuId={menuId}/>
             </List>
         </Drawer>
     );
-};
-
-const stateToProps = (state) => ({
-    menuId: state.menuId,
 });
-
-export default connect(stateToProps)(Menu);
-export {MenuWidth};

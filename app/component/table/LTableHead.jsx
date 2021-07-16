@@ -6,7 +6,7 @@ import TableSortLabel from "@material-ui/core/TableSortLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 
-const LTableHead = (
+export const LTableHead = (
     {
         columns,
         actions,
@@ -53,5 +53,3 @@ const LTableHead = (
         </TableHead>
     );
 };
-
-export default LTableHead;

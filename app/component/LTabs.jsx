@@ -50,7 +50,7 @@ function LTabPanel({children, value, index, style}) {
     );
 }
 
-const LTabs = ({panels, tabIdx, setTabIdx, width}) => {
+export const LTabs = ({panels, tabIdx, setTabIdx, width}) => {
     const classes = useStyles();
 
     return (
@@ -76,5 +76,3 @@ const LTabs = ({panels, tabIdx, setTabIdx, width}) => {
         </Paper>
     );
 };
-
-export default LTabs;

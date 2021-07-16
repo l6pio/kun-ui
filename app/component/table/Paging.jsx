@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 
-const Paging = (defaultOrderBy, defaultOrder) => {
+export const Paging = (defaultOrderBy, defaultOrder) => {
     const [data, setData] = React.useState([]);
     const [page, setPage] = React.useState(1);
     const [pageCount, setPageCount] = React.useState(1);
@@ -21,5 +21,3 @@ const Paging = (defaultOrderBy, defaultOrder) => {
         trigger, setTrigger,
     };
 };
-
-export default Paging;

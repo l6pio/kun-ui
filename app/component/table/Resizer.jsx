@@ -65,7 +65,7 @@ const setListeners = (div) => {
     });
 };
 
-const resizable = (table) => {
+export const resizable = (table) => {
     let row = table.getElementsByTagName("tr")[0];
     let cols = row ? row.children : undefined;
     if (!cols) return;
@@ -83,5 +83,3 @@ const resizable = (table) => {
         setListeners(div);
     }
 };
-
-export default resizable;

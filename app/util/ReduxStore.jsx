@@ -1,5 +1,5 @@
 import {applyMiddleware, compose, createStore} from "redux";
-import reducers from "../reducer/root";
+import {reducers} from "../reducer/root";
 import thunkMiddleware from "redux-thunk";
 
 const loadState = () => {
@@ -17,7 +17,8 @@ const saveState = (state) => {
 };
 
 const persistedStore = loadState();
-const store = createStore(reducers, persistedStore,
+
+export const store = createStore(reducers, persistedStore,
     compose(
         applyMiddleware(
             thunkMiddleware
@@ -28,5 +29,3 @@ const store = createStore(reducers, persistedStore,
 store.subscribe(() => {
     saveState(store.getState());
 });
-
-export default store;

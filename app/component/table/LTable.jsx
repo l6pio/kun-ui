@@ -11,9 +11,9 @@ import IconButton from "@material-ui/core/IconButton";
 import SpeedDial from "@material-ui/lab/SpeedDial";
 import SpeedDialAction from "@material-ui/lab/SpeedDialAction";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import LTableToolbar from "./LTableToolbar";
-import LTableHead from "./LTableHead";
-import resizable from "./Resizer";
+import {LTableToolbar} from "./LTableToolbar";
+import {LTableHead} from "./LTableHead";
+import {resizable} from "./Resizer";
 import Pagination from "@material-ui/lab/Pagination";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
@@ -45,7 +45,7 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-const LTable = (
+export const LTable = (
     {
         id, title, columns, rows, toolbar, showHeader,
         actions, onRowClick, onColClick,
@@ -220,5 +220,3 @@ const LTable = (
         </Paper>
     );
 };
-
-export default LTable;

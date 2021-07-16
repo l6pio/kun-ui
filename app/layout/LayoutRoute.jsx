@@ -1,9 +1,8 @@
 import React from "react";
 import {Route} from "react-router-dom";
-import Layout from "./Layout";
-import {connect} from "react-redux";
+import {Layout} from "./Layout";
 
-const LayoutRoute = ({component: Component, ...rest}) => {
+export const LayoutRoute = ({component: Component, ...rest}) => {
     return (
         <Route {...rest} render={matchProps => (
             <Layout>
@@ -12,5 +11,3 @@ const LayoutRoute = ({component: Component, ...rest}) => {
         )}/>
     );
 };
-
-export default connect()(LayoutRoute);

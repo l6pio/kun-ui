@@ -19,7 +19,7 @@ const useToolbarStyles = makeStyles(theme => ({
     }
 }));
 
-const LTableToolbar = ({title, selected, toolbar}) => {
+export const LTableToolbar = ({title, selected, toolbar}) => {
     const classes = useToolbarStyles();
     const totalSelected = selected.length;
 
@@ -40,5 +40,3 @@ const LTableToolbar = ({title, selected, toolbar}) => {
         </Toolbar>
     );
 };
-
-export default LTableToolbar;

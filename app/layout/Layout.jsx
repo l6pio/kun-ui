@@ -5,7 +5,7 @@ import clsx from "clsx";
 import {makeStyles, ThemeProvider} from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Box from "@material-ui/core/Box";
-import Menu, {MenuWidth} from "./Menu";
+import {Menu, MenuWidth} from "./Menu";
 import SysFont from "../font/TT Norms Pro Regular.woff";
 import SysFontBold from "../font/TT Norms Pro Bold.woff";
 import SysFontItalic from "../font/TT Norms Pro Italic.woff";
@@ -107,7 +107,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const Layout = ({history, location, children}) => {
+export const Layout = connect()(withRouter(({history, location, children}) => {
     const classes = useStyles();
 
     return (
@@ -150,6 +150,4 @@ const Layout = ({history, location, children}) => {
             </ThemeProvider>
         </Fragment>
     );
-};
-
-export default connect()(withRouter(Layout));
+}));
