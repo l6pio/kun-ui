@@ -8,6 +8,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import {isWidthUp, withWidth} from "@material-ui/core";
 import {SaveArtifact} from "../reducer/select";
 import {useHistory} from "react-router-dom";
+import {SaveMenuId} from "../reducer/menu";
 
 export const ArtifactTable = connect((state) => ({
     artifactListOrder: state.artifactListOrder,
@@ -15,7 +16,6 @@ export const ArtifactTable = connect((state) => ({
     const history = useHistory();
     const apiClient = ApiClient();
     const paging = Paging(artifactListOrder.orderBy, artifactListOrder.order);
-    const upSm = isWidthUp("sm", width);
 
     const setData = data => {
         paging.setData(data.slice);
@@ -52,7 +52,7 @@ export const ArtifactTable = connect((state) => ({
             id: "name",
             label: "Name"
         },
-        ...(upSm ? extraColumns : [])
+        ...(isWidthUp("md", width) ? extraColumns : [])
     ];
 
     return (
@@ -79,6 +79,10 @@ export const ArtifactTable = connect((state) => ({
                                     id: row.id,
                                     name: row.name
                                 },
+                            });
+                            dispatch({
+                                type: SaveMenuId,
+                                value: 20,
                             });
                             history.push("/artifact/details");
                         },

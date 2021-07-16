@@ -9,6 +9,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import {isWidthUp, withWidth} from "@material-ui/core";
 import {SaveCve} from "../reducer/select";
 import {useHistory} from "react-router-dom";
+import {SaveMenuId} from "../reducer/menu";
 
 export const CveTable = connect((state) => ({
     cveListOrder: state.cveListOrder,
@@ -16,7 +17,6 @@ export const CveTable = connect((state) => ({
     const history = useHistory();
     const apiClient = ApiClient();
     const paging = Paging(cveListOrder.orderBy, cveListOrder.order);
-    const upSm = isWidthUp("sm", width);
 
     const setData = data => {
         paging.setData(data.slice);
@@ -60,7 +60,7 @@ export const CveTable = connect((state) => ({
             id: "id",
             label: "ID",
         },
-        ...(upSm ? extraColumns : [])
+        ...(isWidthUp("md", width) ? extraColumns : [])
     ];
 
     return (
@@ -86,6 +86,10 @@ export const CveTable = connect((state) => ({
                                 value: {
                                     id: row.id
                                 },
+                            });
+                            dispatch({
+                                type: SaveMenuId,
+                                value: 30,
                             });
                             history.push("/cve/details");
                         },

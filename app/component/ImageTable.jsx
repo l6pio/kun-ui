@@ -9,6 +9,7 @@ import {LTable} from "./table/LTable";
 import {SaveImageListOrder} from "../reducer/table";
 import SearchIcon from "@material-ui/icons/Search";
 import {SaveImage} from "../reducer/select";
+import {SaveMenuId} from "../reducer/menu";
 
 export const ImageTable = connect((state) => ({
     imageListOrder: state.imageListOrder,
@@ -16,7 +17,6 @@ export const ImageTable = connect((state) => ({
     const history = useHistory();
     const apiClient = ApiClient();
     const paging = Paging(imageListOrder.orderBy, imageListOrder.order);
-    const upSm = isWidthUp("sm", width);
 
     const setData = data => {
         paging.setData(data.slice);
@@ -54,7 +54,7 @@ export const ImageTable = connect((state) => ({
             id: "name",
             label: "Name"
         },
-        ...(upSm ? extraColumns : [])
+        ...(isWidthUp("md", width) ? extraColumns : [])
     ];
 
     return (
@@ -81,6 +81,10 @@ export const ImageTable = connect((state) => ({
                                     id: row.id,
                                     name: row.name
                                 },
+                            });
+                            dispatch({
+                                type: SaveMenuId,
+                                value: 10,
                             });
                             history.push("/image/details");
                         },

@@ -8,9 +8,7 @@ import {niceBytes} from "../Const";
 import {CveTable} from "../component/CveTable";
 import {ArtifactTable} from "../component/ArtifactTable";
 
-const Profile = connect((state) => ({
-    image: state.image,
-}))(({image}) => {
+const Profile = ({image}) => {
     const apiClient = ApiClient();
     const [data, setData] = React.useState({
         name: "",
@@ -79,7 +77,7 @@ const Profile = connect((state) => ({
             </Grid>
         </Box>
     );
-});
+};
 
 export const ImageDetails = connect((state) => ({
     image: state.image,
@@ -94,7 +92,7 @@ export const ImageDetails = connect((state) => ({
                 panels={[
                     {
                         label: "Profile",
-                        content: <Profile/>,
+                        content: <Profile image={image}/>,
                         style: {padding: "0 24px 4px 24px"},
                     },
                     {
