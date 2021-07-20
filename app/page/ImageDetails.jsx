@@ -1,15 +1,16 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
-import {Grid, TextField} from "@material-ui/core";
+import {Divider, Grid, TextField} from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import {LTabs} from "../component/LTabs";
 import {ApiClient} from "../util/ApiClient";
 import {niceBytes} from "../Const";
 import {CveTable} from "../component/CveTable";
-import {ArtifactTable} from "../component/ArtifactTable";
+import {ImageTimelineChart} from "../component/chart/ImageTimelineChart";
 
 const Profile = ({image}) => {
     const apiClient = ApiClient();
+    const [totalCve, setTotalCve] = React.useState(0);
     const [data, setData] = React.useState({
         name: "",
         id: "",
@@ -18,9 +19,8 @@ const Profile = ({image}) => {
     });
 
     useEffect(() => {
-        apiClient.get(`/image/${image.id}`).then(res => {
-            setData(res.data);
-        });
+        apiClient.get(`/image/${image.id}`).then(res => setData(res.data));
+        apiClient.get(`/image/${image.id}/vulnerability/count`).then(res => setTotalCve(res.data));
     }, [image]);
 
     return (
@@ -50,7 +50,7 @@ const Profile = ({image}) => {
                         fullWidth
                     />
                 </Grid>
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid item xs={12} sm={4} md={3}>
                     <TextField
                         id="image-size"
                         label="Image Size"
@@ -62,7 +62,7 @@ const Profile = ({image}) => {
                         fullWidth
                     />
                 </Grid>
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid item xs={12} sm={4} md={3}>
                     <TextField
                         id="pods"
                         label="Pods"
@@ -74,13 +74,29 @@ const Profile = ({image}) => {
                         fullWidth
                     />
                 </Grid>
+                <Grid item xs={12} sm={4} md={3}>
+                    <TextField
+                        id="total-cve"
+                        label="Total CVE"
+                        value={totalCve}
+                        variant="outlined"
+                        InputProps={{
+                            readOnly: true,
+                        }}
+                        fullWidth
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <Divider style={{marginBottom: "15px"}}/>
+                    <ImageTimelineChart/>
+                </Grid>
             </Grid>
         </Box>
     );
 };
 
 export const ImageDetails = connect((state) => ({
-    image: state.image,
+    image: state.image
 }))(({image}) => {
     const [tabIdx, setTabIdx] = React.useState(0);
 
@@ -96,13 +112,8 @@ export const ImageDetails = connect((state) => ({
                         style: {padding: "0 24px 4px 24px"},
                     },
                     {
-                        label: "Artifact",
-                        content: <ArtifactTable image={image} cve={null} flat/>,
-                        style: {padding: "0 24px 4px 24px"},
-                    },
-                    {
                         label: "CVE",
-                        content: <CveTable image={image} artifact={null} flat/>,
+                        content: <CveTable image={image} flat/>,
                         style: {padding: "0 24px 4px 24px"},
                     }
                 ]}/>

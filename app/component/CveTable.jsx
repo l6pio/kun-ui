@@ -6,17 +6,65 @@ import {FixState, Severity} from "../Const";
 import {LTable} from "./table/LTable";
 import {SaveCveListOrder} from "../reducer/table";
 import SearchIcon from "@material-ui/icons/Search";
-import {isWidthUp, withWidth} from "@material-ui/core";
+import {FormControl, isWidthUp, MenuItem, Select, Typography, withWidth} from "@material-ui/core";
 import {SaveCve} from "../reducer/select";
 import {useHistory} from "react-router-dom";
 import {SaveMenuId} from "../reducer/menu";
+import {makeStyles} from "@material-ui/core/styles";
+
+const useStyles = makeStyles(() => ({
+    tableTitle: {
+        display: "flex",
+        flexWrap: "nowrap",
+        flexDirection: "row",
+        justifyContent: "space-between"
+    }
+}));
+
+const CveTableTitle = ({title, artifacts, selectedArtId, setSelectedArtId}) => {
+    const classes = useStyles();
+
+    const Title = () => (
+        <Typography variant="h5" style={{lineHeight: "52px", paddingLeft: "20px"}}>{title}</Typography>
+    );
+
+    const ArtifactSelect = () => (
+        <FormControl variant="outlined">
+            <Select
+                value={selectedArtId}
+                onChange={e => setSelectedArtId(e.target.value)}
+                displayEmpty
+            >
+                <MenuItem value="">All Artifacts</MenuItem>
+                {artifacts.map(v => <MenuItem key={v.id} value={v.id}>{v.name}:{v.version}</MenuItem>)}
+            </Select>
+        </FormControl>
+    );
+
+    if (title && artifacts.length > 0) {
+        return (
+            <div className={classes.tableTitle}>
+                <div><Title/></div>
+                <div><ArtifactSelect/></div>
+            </div>
+        );
+    } else if (title) {
+        return <Title/>;
+    } else if (artifacts.length > 0) {
+        return <ArtifactSelect/>;
+    } else {
+        return null;
+    }
+};
 
 export const CveTable = connect((state) => ({
     cveListOrder: state.cveListOrder,
-}))(withWidth()(({dispatch, width, cveListOrder, image, artifact, title, flat}) => {
+}))(withWidth()(({dispatch, width, cveListOrder, image, title, flat}) => {
     const history = useHistory();
     const apiClient = ApiClient();
     const paging = Paging(cveListOrder.orderBy, cveListOrder.order);
+    const [artifacts, setArtifacts] = React.useState([]);
+    const [selectedArtId, setSelectedArtId] = React.useState("");
 
     const setData = data => {
         paging.setData(data.slice);
@@ -26,14 +74,15 @@ export const CveTable = connect((state) => ({
     };
 
     useEffect(() => {
-        if (image) {
+        if (selectedArtId) {
+            apiClient.get(`/artifact/${selectedArtId}/vulnerability?page=${paging.page}&order=${paging.order}${paging.orderBy}`).then(res => setData(res.data));
+        } else if (image) {
+            apiClient.get(`/image/${image.id}/artifact`).then(res => setArtifacts(res.data.slice));
             apiClient.get(`/image/${image.id}/vulnerability?page=${paging.page}&order=${paging.order}${paging.orderBy}`).then(res => setData(res.data));
-        } else if (artifact) {
-            apiClient.get(`/artifact/${artifact.id}/vulnerability?page=${paging.page}&order=${paging.order}${paging.orderBy}`).then(res => setData(res.data));
         } else {
             apiClient.get(`/cve?page=${paging.page}&order=${paging.order}${paging.orderBy}`).then(res => setData(res.data));
         }
-    }, [image, artifact, paging.trigger]);
+    }, [image, selectedArtId, paging.trigger]);
 
     const extraColumns = [
         {
@@ -43,15 +92,15 @@ export const CveTable = connect((state) => ({
             display: v => Severity[v]
         },
         {
+            id: "cvssBaseScore",
+            label: "CVSS Base",
+            width: "180px",
+        },
+        {
             id: "fixState",
             label: "Fix State",
             width: "180px",
             display: v => FixState[v]
-        },
-        {
-            id: "imageCount",
-            label: "Affected Images",
-            width: "180px",
         }
     ];
 
@@ -66,7 +115,14 @@ export const CveTable = connect((state) => ({
     return (
         <LTable
             id="cve-table"
-            title={title}
+            title={
+                <CveTableTitle
+                    title={title}
+                    artifacts={artifacts}
+                    selectedArtId={selectedArtId}
+                    setSelectedArtId={setSelectedArtId}
+                />
+            }
             columns={columns}
             rows={paging.data}
             onColClick={(orderBy, order) => {

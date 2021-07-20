@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 import clsx from "clsx";
 import {lighten, makeStyles} from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 
 const useToolbarStyles = makeStyles(theme => ({
     root: {
-        padding: "0 15px 0 20px",
+        padding: "0",
         borderBottom: "2px solid #272C34",
     },
     highlight: {
@@ -32,9 +32,9 @@ export const LTableToolbar = ({title, selected, toolbar}) => {
                     {totalSelected} selected
                 </Typography>
             ) : (
-                <Typography className={classes.title} variant="h6" id="tableTitle">
+                <Fragment>
                     {title}
-                </Typography>
+                </Fragment>
             )}
             {toolbar && toolbar(selected)}
         </Toolbar>

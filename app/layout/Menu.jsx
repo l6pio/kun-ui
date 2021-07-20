@@ -11,7 +11,6 @@ import {SaveMenuId} from "../reducer/menu";
 import Typography from "@material-ui/core/Typography";
 import BugReportIcon from "@material-ui/icons/BugReport";
 import LayersIcon from "@material-ui/icons/Layers";
-import CategoryIcon from "@material-ui/icons/Category";
 import {useHistory} from "react-router-dom";
 
 export const MenuWidth = 200;
@@ -43,11 +42,6 @@ const menuItems = {
         icon: <LayersIcon style={{color: "white"}}/>
     },
     20: {
-        label: <Typography variant="body1">{"Artifact"}</Typography>,
-        path: "/artifact",
-        icon: <CategoryIcon style={{color: "white"}}/>
-    },
-    30: {
         label: <Typography variant="body1">{"CVE"}</Typography>,
         path: "/cve",
         icon: <BugReportIcon style={{color: "white"}}/>
@@ -99,7 +93,6 @@ export const Menu = connect((state) => ({
             <List>
                 <MenuItem history={history} dispatch={dispatch} id={10} menuId={menuId}/>
                 <MenuItem history={history} dispatch={dispatch} id={20} menuId={menuId}/>
-                <MenuItem history={history} dispatch={dispatch} id={30} menuId={menuId}/>
             </List>
         </Drawer>
     );

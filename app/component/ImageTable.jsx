@@ -1,5 +1,5 @@
 import {connect} from "react-redux";
-import {isWidthUp, withWidth} from "@material-ui/core";
+import {isWidthUp, Typography, withWidth} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
 import {ApiClient} from "../util/ApiClient";
 import {Paging} from "./table/Paging";
@@ -13,10 +13,14 @@ import {SaveMenuId} from "../reducer/menu";
 
 export const ImageTable = connect((state) => ({
     imageListOrder: state.imageListOrder,
-}))(withWidth()(({dispatch, width, imageListOrder, artifact, cve, title, flat}) => {
+}))(withWidth()(({dispatch, width, imageListOrder, cve, title, flat}) => {
     const history = useHistory();
     const apiClient = ApiClient();
     const paging = Paging(imageListOrder.orderBy, imageListOrder.order);
+
+    const Title = () => (
+        <Typography variant="h5" style={{lineHeight: "52px", paddingLeft: "20px"}}>{title}</Typography>
+    );
 
     const setData = data => {
         paging.setData(data.slice);
@@ -26,14 +30,12 @@ export const ImageTable = connect((state) => ({
     };
 
     useEffect(() => {
-        if (artifact) {
-            apiClient.get(`/artifact/${artifact.id}/image?page=${paging.page}&order=${paging.order}${paging.orderBy}`).then(res => setData(res.data));
-        } else if (cve) {
+        if (cve) {
             apiClient.get(`/cve/${cve.id}/image?page=${paging.page}&order=${paging.order}${paging.orderBy}`).then(res => setData(res.data));
         } else {
             apiClient.get(`/image?page=${paging.page}&order=${paging.order}${paging.orderBy}`).then(res => setData(res.data));
         }
-    }, [artifact, cve, paging.trigger]);
+    }, [cve, paging.trigger]);
 
     const extraColumns = [
         {
@@ -60,7 +62,7 @@ export const ImageTable = connect((state) => ({
     return (
         <LTable
             id="image-table"
-            title={title}
+            title={<Title/>}
             columns={columns}
             rows={paging.data}
             onColClick={(orderBy, order) => {
