@@ -15,7 +15,7 @@ const Profile = ({image}) => {
         name: "",
         id: "",
         size: 0,
-        usage: 0
+        pods: 0
     });
 
     useEffect(() => {
@@ -66,7 +66,7 @@ const Profile = ({image}) => {
                     <TextField
                         id="pods"
                         label="Pods"
-                        value={data.usage}
+                        value={data.pods}
                         variant="outlined"
                         InputProps={{
                             readOnly: true,

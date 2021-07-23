@@ -45,7 +45,7 @@ export const ImageTable = connect((state) => ({
             display: v => niceBytes(v)
         },
         {
-            id: "usage",
+            id: "pods",
             label: "Pods",
             width: "180px"
         }
