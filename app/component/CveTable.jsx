@@ -116,12 +116,13 @@ export const CveTable = connect((state) => ({
         <LTable
             id="cve-table"
             title={
-                <CveTableTitle
-                    title={title}
-                    artifacts={artifacts}
-                    selectedArtId={selectedArtId}
-                    setSelectedArtId={setSelectedArtId}
-                />
+                title || artifacts.length > 0 ?
+                    <CveTableTitle
+                        title={title}
+                        artifacts={artifacts}
+                        selectedArtId={selectedArtId}
+                        setSelectedArtId={setSelectedArtId}
+                    /> : null
             }
             columns={columns}
             rows={paging.data}

@@ -18,9 +18,9 @@ const chartOptions = data => {
                 text: "Number of Pods Running",
                 align: "center",
                 style: {
-                    fontSize:  "15px",
-                    fontWeight:  "",
-                    color:  "#263238"
+                    fontSize: "15px",
+                    fontWeight: "",
+                    color: "#263238"
                 },
             },
             colors: ["#00bbf9"],
@@ -155,16 +155,11 @@ export const ImageTimelineChart = connect((state) => ({
                 setData(defaultData);
                 return;
             }
-
-            const chartMin = Math.min(...timeline.map(v => v.timestamp));
-            const chartMax = Math.max(...timeline.map(v => v.timestamp));
-
-            timeline.push({timestamp: chartMin, count: 0});
             timeline = timeline.sort((a, b) => a.timestamp < b.timestamp ? -1 : a.timestamp > b.timestamp ? 1 : 0);
 
             setData({
-                min: chartMin,
-                max: chartMax,
+                min: Math.min(...timeline.map(v => v.timestamp)),
+                max: Math.max(...timeline.map(v => v.timestamp)),
                 series: [{
                     name: "Pods",
                     data: timeline.map(v => [v.timestamp, v.count]),
