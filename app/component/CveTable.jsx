@@ -77,8 +77,8 @@ export const CveTable = connect((state) => ({
         if (selectedArtId) {
             apiClient.get(`/artifact/${selectedArtId}/vulnerability?page=${paging.page}&order=${paging.order}${paging.orderBy}`).then(res => setData(res.data));
         } else if (image) {
-            apiClient.get(`/image/${image.id}/artifact`).then(res => setArtifacts(res.data.slice));
-            apiClient.get(`/image/${image.id}/vulnerability?page=${paging.page}&order=${paging.order}${paging.orderBy}`).then(res => setData(res.data));
+            apiClient.get(`/image/${btoa(image.id)}/artifact`).then(res => setArtifacts(res.data.slice));
+            apiClient.get(`/image/${btoa(image.id)}/vulnerability?page=${paging.page}&order=${paging.order}${paging.orderBy}`).then(res => setData(res.data));
         } else {
             apiClient.get(`/cve?page=${paging.page}&order=${paging.order}${paging.orderBy}`).then(res => setData(res.data));
         }

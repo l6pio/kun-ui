@@ -148,7 +148,7 @@ export const ImageTimelineChart = connect((state) => ({
     const options = chartOptions(data);
 
     const getData = () => {
-        apiClient.get(`/image/${image.id}/timeline`).then(res => {
+        apiClient.get(`/image/${btoa(image.id)}/timeline`).then(res => {
             let timeline = res.data;
 
             if (!timeline) {

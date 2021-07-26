@@ -19,8 +19,8 @@ const Profile = ({image}) => {
     });
 
     useEffect(() => {
-        apiClient.get(`/image/${image.id}`).then(res => setData(res.data));
-        apiClient.get(`/image/${image.id}/vulnerability/count`).then(res => setTotalCve(res.data));
+        apiClient.get(`/image/${btoa(image.id)}`).then(res => setData(res.data));
+        apiClient.get(`/image/${btoa(image.id)}/vulnerability/count`).then(res => setTotalCve(res.data));
     }, [image]);
 
     return (
