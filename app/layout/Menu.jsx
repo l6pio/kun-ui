@@ -11,6 +11,7 @@ import {SaveMenuId} from "../reducer/menu";
 import Typography from "@material-ui/core/Typography";
 import BugReportIcon from "@material-ui/icons/BugReport";
 import LayersIcon from "@material-ui/icons/Layers";
+import CategoryIcon from "@material-ui/icons/Category";
 import {useHistory} from "react-router-dom";
 
 export const MenuWidth = 200;
@@ -37,11 +38,16 @@ const useMenuStyles = makeStyles(theme => ({
 
 const menuItems = {
     10: {
+        label: <Typography variant="body1">{"Pod"}</Typography>,
+        path: "/pod",
+        icon: <CategoryIcon style={{color: "white"}}/>
+    },
+    20: {
         label: <Typography variant="body1">{"Image"}</Typography>,
         path: "/image",
         icon: <LayersIcon style={{color: "white"}}/>
     },
-    20: {
+    30: {
         label: <Typography variant="body1">{"CVE"}</Typography>,
         path: "/cve",
         icon: <BugReportIcon style={{color: "white"}}/>
@@ -91,8 +97,9 @@ export const Menu = connect((state) => ({
             </div>
             <Divider/>
             <List>
-                <MenuItem history={history} dispatch={dispatch} id={10} menuId={menuId}/>
-                <MenuItem history={history} dispatch={dispatch} id={20} menuId={menuId}/>
+                {Object.keys(menuItems).map(id => {
+                    return <MenuItem key={id} history={history} dispatch={dispatch} id={id} menuId={menuId}/>;
+                })}
             </List>
         </Drawer>
     );
