@@ -4,6 +4,7 @@ import {LTabs} from "../component/LTabs";
 import {ApiClient} from "../util/ApiClient";
 import {Grid, TextField} from "@material-ui/core";
 import {PodStatusChart} from "../component/chart/PodStatusChart";
+import {PodPhaseChart} from "../component/chart/PodPhaseChart";
 
 const Overview = () => {
     const apiClient = ApiClient();
@@ -21,8 +22,11 @@ const Overview = () => {
     return (
         <Box style={{padding: "25px 0 20px 0"}}>
             <Grid container spacing={3}>
-                <Grid item xs={12} sm={12} md={12}>
+                <Grid item xs={12} sm={6} md={6}>
                     <PodStatusChart/>
+                </Grid>
+                <Grid item xs={12} sm={6} md={6}>
+                    <PodPhaseChart/>
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
                     <TextField

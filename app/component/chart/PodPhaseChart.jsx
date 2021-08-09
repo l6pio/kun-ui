@@ -16,12 +16,12 @@ const chartOptions = data => {
     };
 };
 
-export const PodStatusChart = () => {
+export const PodPhaseChart = () => {
     const apiClient = ApiClient();
     const [data, setData] = React.useState({});
 
     useEffect(() => {
-        apiClient.get("/pod/overview").then(res => setData(res.data.countByStatus));
+        apiClient.get("/pod/overview").then(res => setData(res.data.countByPhase));
     }, []);
 
     return (
