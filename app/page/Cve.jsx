@@ -1,6 +1,6 @@
 import React from "react";
 import Box from "@material-ui/core/Box";
-import {CveTable} from "../component/CveTable";
+import {CveTable} from "../component/cve/CveTable";
 
 export const Cve = () => {
     return (

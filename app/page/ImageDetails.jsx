@@ -2,11 +2,11 @@ import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import {Divider, Grid, TextField} from "@material-ui/core";
 import Box from "@material-ui/core/Box";
-import {LTabs} from "../component/LTabs";
+import {LTabs} from "../component/common/LTabs";
 import {ApiClient} from "../util/ApiClient";
 import {niceBytes} from "../Const";
-import {CveTable} from "../component/CveTable";
-import {ImageTimelineChart} from "../component/chart/ImageTimelineChart";
+import {CveTable} from "../component/cve/CveTable";
+import {ImageTimelineChart} from "../component/image/ImageTimelineChart";
 
 const Profile = ({image}) => {
     const apiClient = ApiClient();

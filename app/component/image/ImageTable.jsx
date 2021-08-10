@@ -1,15 +1,15 @@
 import {connect} from "react-redux";
 import {isWidthUp, Typography, withWidth} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
-import {ApiClient} from "../util/ApiClient";
-import {Paging} from "./table/Paging";
+import {ApiClient} from "../../util/ApiClient";
+import {Paging} from "../common/table/Paging";
 import React, {useEffect} from "react";
-import {niceBytes} from "../Const";
-import {LTable} from "./table/LTable";
-import {SaveImageListOrder} from "../reducer/table";
+import {niceBytes} from "../../Const";
+import {LTable} from "../common/table/LTable";
+import {SaveImageListOrder} from "../../reducer/table";
 import SearchIcon from "@material-ui/icons/Search";
-import {SaveImage} from "../reducer/select";
-import {SaveMenuId} from "../reducer/menu";
+import {SaveImage} from "../../reducer/select";
+import {SaveMenuId} from "../../reducer/menu";
 
 export const ImageTable = connect((state) => ({
     imageListOrder: state.imageListOrder,

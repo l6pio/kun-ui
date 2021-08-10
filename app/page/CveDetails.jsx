@@ -1,11 +1,11 @@
 import {connect} from "react-redux";
 import React, {useEffect} from "react";
 import Box from "@material-ui/core/Box";
-import {LTabs} from "../component/LTabs";
+import {LTabs} from "../component/common/LTabs";
 import {ApiClient} from "../util/ApiClient";
 import {Grid, IconButton, InputAdornment, TableCell, TextField} from "@material-ui/core";
 import OpenInNewIcon from "@material-ui/icons/OpenInNew";
-import {ImageTable} from "../component/ImageTable";
+import {ImageTable} from "../component/image/ImageTable";
 import {FixState, Severity} from "../Const";
 import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";

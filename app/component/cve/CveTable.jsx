@@ -1,15 +1,15 @@
 import {connect} from "react-redux";
-import {ApiClient} from "../util/ApiClient";
-import {Paging} from "./table/Paging";
+import {ApiClient} from "../../util/ApiClient";
+import {Paging} from "../common/table/Paging";
 import React, {useEffect} from "react";
-import {FixState, Severity} from "../Const";
-import {LTable} from "./table/LTable";
-import {SaveCveListOrder} from "../reducer/table";
+import {FixState, Severity} from "../../Const";
+import {LTable} from "../common/table/LTable";
+import {SaveCveListOrder} from "../../reducer/table";
 import SearchIcon from "@material-ui/icons/Search";
 import {FormControl, isWidthUp, MenuItem, Select, Typography, withWidth} from "@material-ui/core";
-import {SaveCve} from "../reducer/select";
+import {SaveCve} from "../../reducer/select";
 import {useHistory} from "react-router-dom";
-import {SaveMenuId} from "../reducer/menu";
+import {SaveMenuId} from "../../reducer/menu";
 import {makeStyles} from "@material-ui/core/styles";
 
 const useStyles = makeStyles(() => ({
