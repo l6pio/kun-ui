@@ -47,7 +47,7 @@ const chartOptions = labels => {
     };
 };
 
-const PodPhaseChart = ({data}) => {
+const PodStatusChart = ({data}) => {
     return (
         <ReactApexChart
             options={chartOptions(data.map(v => v.phase))}
@@ -58,13 +58,13 @@ const PodPhaseChart = ({data}) => {
     );
 };
 
-export const PodPhaseAccordion = () => {
+export const PodStatusAccordion = () => {
     const apiClient = ApiClient();
     const [data, setData] = React.useState([]);
 
     useEffect(() => {
         apiClient.get("/pod/overview").then(res => {
-            const data = res.data.countByPhase;
+            const data = res.data.countByStatus;
             const total = Object.values(data).reduce((a, b) => a + b, 0);
             setData(
                 Object.keys(data).map(k => ({
@@ -80,11 +80,11 @@ export const PodPhaseAccordion = () => {
         <Accordion defaultExpanded={true}>
             <LAccordionSummary
                 expandIcon={<ExpandMoreIcon/>}
-                id="count-by-phase"
+                id="count-by-status"
             >
                 <Box align="center" width={1}>
                     <Typography variant="subtitle2">
-                        Count By Phase
+                        Count By Status
                     </Typography>
                 </Box>
             </LAccordionSummary>
@@ -92,14 +92,14 @@ export const PodPhaseAccordion = () => {
                 <Grid container spacing={2}>
                     <Grid item xs={12}><Divider/></Grid>
                     <Grid item xs={12}>
-                        <PodPhaseChart data={data}/>
+                        <PodStatusChart data={data}/>
                     </Grid>
                     <Grid item xs={12}>
                         <TableContainer>
                             <Table>
                                 <TableHead>
                                     <TableRow>
-                                        <StyledTableCell>Phase</StyledTableCell>
+                                        <StyledTableCell>Status</StyledTableCell>
                                         <StyledTableCell align="right">Count</StyledTableCell>
                                         <StyledTableCell align="right">%</StyledTableCell>
                                     </TableRow>

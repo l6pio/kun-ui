@@ -12,6 +12,7 @@ export const App = () => {
         <BrowserRouter>
             <Switch>
                 <LayoutRoute exact path="/" component={Pod}/>
+                <LayoutRoute exact path="/pod" component={Pod}/>
                 <LayoutRoute exact path="/image" component={Image}/>
                 <LayoutRoute exact path="/image/details" component={ImageDetails}/>
                 <LayoutRoute exact path="/cve" component={Cve}/>

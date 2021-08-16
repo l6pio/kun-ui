@@ -1,9 +1,12 @@
+import {Accordion, AccordionDetails, Grid} from "@material-ui/core";
+import {LAccordionSummary} from "../common/LAccordionSummary";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Box from "@material-ui/core/Box";
+import Typography from "@material-ui/core/Typography";
 import React, {useEffect} from "react";
-import {connect} from "react-redux";
+import {ApiClient} from "../../util/ApiClient";
 import ReactApexChart from "react-apexcharts";
 import moment from "moment";
-import Box from "@material-ui/core/Box";
-import {ApiClient} from "../../util/ApiClient";
 
 const defaultData = {
     min: 0,
@@ -14,15 +17,6 @@ const defaultData = {
 const chartOptions = data => {
     return {
         timeline: {
-            title: {
-                text: "Number of Running Pods",
-                align: "center",
-                style: {
-                    fontSize: "15px",
-                    fontWeight: "",
-                    color: "#263238"
-                },
-            },
             colors: ["#00bbf9"],
             chart: {
                 id: "chartArea",
@@ -33,6 +27,7 @@ const chartOptions = data => {
                     show: false,
                 },
                 parentHeightOffset: 5,
+                offsetY: -25
             },
             dataLabels: {
                 enabled: false
@@ -88,7 +83,7 @@ const chartOptions = data => {
         brush: {
             chart: {
                 id: "chartBrush",
-                offsetY: -27,
+                offsetY: -40,
                 brush: {
                     target: "chartArea",
                     enabled: true
@@ -140,15 +135,13 @@ const chartOptions = data => {
     };
 };
 
-export const ImageTimelineChart = connect((state) => ({
-    image: state.image
-}))(({image}) => {
+const RunningPodTimelineChart = () => {
     const apiClient = ApiClient();
     const [data, setData] = React.useState(defaultData);
     const options = chartOptions(data);
 
     const getData = () => {
-        apiClient.get(`/image/${btoa(image.id)}/timeline`).then(res => {
+        apiClient.get("/pod/timeline").then(res => {
             let timeline = res.data;
 
             if (!timeline) {
@@ -168,11 +161,11 @@ export const ImageTimelineChart = connect((state) => ({
         });
     };
 
-    useEffect(() => getData(), [image]);
+    useEffect(() => getData(), []);
 
     return (
         data.series.length > 0 ?
-            <Box id="charts" style={{position: "relative", height: 320, width: "100%"}}>
+            <Box id="charts" style={{position: "relative", height: 310, width: "100%"}}>
                 <div style={{position: "relative"}}>
                     <div id="chart1" style={{zIndex: 100}}>
                         <ReactApexChart options={options.timeline} series={data.series} type="line" height="250"/>
@@ -190,4 +183,25 @@ export const ImageTimelineChart = connect((state) => ({
                 </div>
             </Box>
     );
-});
+};
+
+export const RunningPodAccordion = () => {
+    return (
+        <Accordion defaultExpanded={true}>
+            <LAccordionSummary expandIcon={<ExpandMoreIcon/>}>
+                <Box align="center" width={1}>
+                    <Typography variant="subtitle2">
+                        Number of Running Pods
+                    </Typography>
+                </Box>
+            </LAccordionSummary>
+            <AccordionDetails style={{padding: "5px 20px 15px 20px"}}>
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <RunningPodTimelineChart/>
+                    </Grid>
+                </Grid>
+            </AccordionDetails>
+        </Accordion>
+    );
+};

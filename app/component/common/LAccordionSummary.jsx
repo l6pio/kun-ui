@@ -1,7 +1,7 @@
 import withStyles from "@material-ui/core/styles/withStyles";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
 
-export const LExpansionPanelSummary = withStyles({
+export const LAccordionSummary = withStyles({
     root: {
         minHeight: 48,
         "&$expanded": {
@@ -20,6 +20,6 @@ export const LExpansionPanelSummary = withStyles({
     },
     expanded: {}
 })(
-    ExpansionPanelSummary
+    AccordionSummary
 );
-LExpansionPanelSummary.muiName = "ExpansionPanelSummary";
+LAccordionSummary.muiName = "AccordionSummary";
