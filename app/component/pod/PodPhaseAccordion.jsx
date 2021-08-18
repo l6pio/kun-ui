@@ -1,6 +1,5 @@
 import React, {useEffect} from "react";
 import {withStyles} from "@material-ui/core/styles";
-import {ApiClient} from "../../util/ApiClient";
 import {Accordion, AccordionDetails, Divider, Grid} from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
@@ -47,41 +46,35 @@ const chartOptions = labels => {
     };
 };
 
-const PodPhaseChart = ({data}) => {
+const PodPhaseChart = ({rows}) => {
     return (
         <ReactApexChart
-            options={chartOptions(data.map(v => v.phase))}
-            series={data.map(v => v.count)}
+            options={chartOptions(rows.map(v => v.phase))}
+            series={rows.map(v => v.count)}
             type="pie"
             height="250"
         />
     );
 };
 
-export const PodPhaseAccordion = () => {
-    const apiClient = ApiClient();
-    const [data, setData] = React.useState([]);
+export const PodPhaseAccordion = ({data}) => {
+    const [rows, setRows] = React.useState([]);
 
     useEffect(() => {
-        apiClient.get("/pod/overview").then(res => {
-            const data = res.data.countByPhase;
-            const total = Object.values(data).reduce((a, b) => a + b, 0);
-            setData(
-                Object.keys(data).map(k => ({
-                    phase: k,
-                    count: data[k],
-                    percentage: total > 0 ? Math.round(data[k] / total * 100) : 0
-                })).sort((a, b) => a.count > b.count ? -1 : a.count < b.count ? 1 : 0)
-            );
-        });
-    }, []);
+        const v = data.countByPhase;
+        const total = Object.values(v).reduce((a, b) => a + b, 0);
+        setRows(
+            Object.keys(v).map(k => ({
+                phase: k,
+                count: v[k],
+                percentage: total > 0 ? Math.round(v[k] / total * 100) : 0
+            })).sort((a, b) => a.count > b.count ? -1 : a.count < b.count ? 1 : 0)
+        );
+    }, [data]);
 
     return (
         <Accordion defaultExpanded={true}>
-            <LAccordionSummary
-                expandIcon={<ExpandMoreIcon/>}
-                id="count-by-phase"
-            >
+            <LAccordionSummary expandIcon={<ExpandMoreIcon/>}>
                 <Box align="center" width={1}>
                     <Typography variant="subtitle2">
                         Count By Phase
@@ -92,7 +85,7 @@ export const PodPhaseAccordion = () => {
                 <Grid container spacing={2}>
                     <Grid item xs={12}><Divider/></Grid>
                     <Grid item xs={12}>
-                        <PodPhaseChart data={data}/>
+                        <PodPhaseChart rows={rows}/>
                     </Grid>
                     <Grid item xs={12}>
                         <TableContainer>
@@ -105,7 +98,7 @@ export const PodPhaseAccordion = () => {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {data.map(v => (
+                                    {rows.map(v => (
                                         <StyledTableRow key={v.phase}>
                                             <StyledTableCell component="th" scope="row">
                                                 {v.phase}

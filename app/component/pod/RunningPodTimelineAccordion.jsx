@@ -185,7 +185,7 @@ const RunningPodTimelineChart = () => {
     );
 };
 
-export const RunningPodAccordion = () => {
+export const RunningPodTimelineAccordion = () => {
     return (
         <Accordion defaultExpanded={true}>
             <LAccordionSummary expandIcon={<ExpandMoreIcon/>}>
