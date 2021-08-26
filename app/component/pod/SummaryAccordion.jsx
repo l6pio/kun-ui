@@ -18,11 +18,11 @@ export const SummaryAccordion = ({data}) => {
             <AccordionDetails style={{padding: "5px 20px 15px 20px"}}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}><Divider/></Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={4}>
                         <TextField
                             id="total-pods"
                             label="Total Pods"
-                            value={data.total}
+                            value={data.total || 0}
                             variant="outlined"
                             InputProps={{
                                 readOnly: true,
@@ -30,11 +30,23 @@ export const SummaryAccordion = ({data}) => {
                             fullWidth
                         />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={4}>
                         <TextField
                             id="running-pods"
                             label="Running Pods"
-                            value={data.totalRunning}
+                            value={data.countByPhase["Running"] || 0}
+                            variant="outlined"
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                            fullWidth
+                        />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <TextField
+                            id="stopped-pods"
+                            label="Stopped Pods"
+                            value={(data.countByPhase["Succeeded"] + data.countByPhase["Failed"]) || 0}
                             variant="outlined"
                             InputProps={{
                                 readOnly: true,

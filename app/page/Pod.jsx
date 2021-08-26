@@ -17,7 +17,7 @@ export const Pod = () => {
     });
 
     useEffect(() => {
-        apiClient.get("/pod/overview").then(res => setData(res.data));
+        apiClient.get("/pod/count").then(res => setData(res.data));
     }, []);
 
     return (
