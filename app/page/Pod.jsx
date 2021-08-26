@@ -1,19 +1,19 @@
 import React, {useEffect} from "react";
 import Box from "@material-ui/core/Box";
 import {Grid} from "@material-ui/core";
-import {PodPhaseAccordion} from "../component/pod/PodPhaseAccordion";
 import {PodStatusAccordion} from "../component/pod/PodStatusAccordion";
 import {RunningPodTimelineAccordion} from "../component/pod/RunningPodTimelineAccordion";
 import {SummaryAccordion} from "../component/pod/SummaryAccordion";
 import {ApiClient} from "../util/ApiClient";
+import {NamespaceAccordion} from "../component/pod/NamespaceAccordion";
 
 export const Pod = () => {
     const apiClient = ApiClient();
     const [data, setData] = React.useState({
         total: 0,
-        totalRunning: 0,
         countByPhase: {},
-        countByStatus: {}
+        countByStatus: {},
+        countByNamespace: {}
     });
 
     useEffect(() => {
@@ -30,10 +30,10 @@ export const Pod = () => {
                     <SummaryAccordion data={data}/>
                 </Grid>
                 <Grid item xs={12} sm={6} md={6}>
-                    <PodPhaseAccordion data={data}/>
+                    <PodStatusAccordion data={data}/>
                 </Grid>
                 <Grid item xs={12} sm={6} md={6}>
-                    <PodStatusAccordion data={data}/>
+                    <NamespaceAccordion data={data}/>
                 </Grid>
             </Grid>
         </Box>

@@ -62,12 +62,11 @@ export const PodStatusAccordion = ({data}) => {
 
     useEffect(() => {
         const v = data.countByStatus;
-        const total = Object.values(v).reduce((a, b) => a + b, 0);
         setRows(
             Object.keys(v).map(k => ({
                 phase: k,
                 count: v[k],
-                percentage: total > 0 ? Math.round(v[k] / total * 100) : 0
+                percentage: data.total > 0 ? Math.round(v[k] / data.total * 100) : 0
             })).sort((a, b) => a.count > b.count ? -1 : a.count < b.count ? 1 : 0)
         );
     }, [data]);
@@ -100,9 +99,7 @@ export const PodStatusAccordion = ({data}) => {
                                 <TableBody>
                                     {rows.map(v => (
                                         <StyledTableRow key={v.phase}>
-                                            <StyledTableCell component="th" scope="row">
-                                                {v.phase}
-                                            </StyledTableCell>
+                                            <StyledTableCell component="th" scope="row">{v.phase}</StyledTableCell>
                                             <StyledTableCell align="right">{v.count}</StyledTableCell>
                                             <StyledTableCell align="right">{v.percentage}%</StyledTableCell>
                                         </StyledTableRow>
